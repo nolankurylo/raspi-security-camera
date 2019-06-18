@@ -10,28 +10,24 @@ connectDB.createConnection(function (err, client) {
   var cookieParser = require('cookie-parser');
   var logger = require('morgan');
   var port = process.env.PORT || 3000;
-  var indexRouter = require('./routes/index');
-  var usersRouter = require('./routes/users');
-  // app.use("/", require("./routes/get"));
-  // app.use("/", require("./routes/post"));
-  // app.use("/", require("./routes/patch"));
-  // app.use("/", require("./routes/delete"));
-  var app = express();
 
-  // view engine setup
-  app.set("views", path.join(__dirname, "views"));
-  app.set("view engine", "pug");
+  var app = express();
 
   app.use(logger("dev"));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.static(path.join(__dirname, "public"))); 
 
-  app.use("/", indexRouter);
-  app.use("/users", usersRouter);
+  // Import routes
+  app.use("/", require("./routes/get"));
+  app.use("/", require("./routes/post"));
+  app.use("/", require("./routes/patch"));
+  app.use("/", require("./routes/delete"));
   
-
+  // View engine setup
+  app.set("views", path.join(__dirname, "views"));
+  app.set("view engine", "pug");
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     next(createError(404));

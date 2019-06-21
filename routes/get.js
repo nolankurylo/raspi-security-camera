@@ -12,12 +12,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/library', function (req, res, next) {
-  var x = db.collection("images").findOne({}, function (err, result) {
+  var x = db.collection("images").find().toArray( function (err, result) {
     if (err) console.log(err)
     console.log(result)
+    return res.render("library", { title: `Library`, images: result });
   })
 
-  res.render('library', { title: `Library` });
 });
 
 module.exports = router;

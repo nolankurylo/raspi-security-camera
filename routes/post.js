@@ -2,14 +2,23 @@ var express = require("express");
 var router = express.Router();
 var db = require("../queries").getDb();
 var multer = require("multer")
-var upload = multer({ dest: "images/" });
 
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, "public/images/")
+  },
+  filename: function(req, file, cb){  
+    var date = new Date().toISOString()  
+    date = date.replace(/\/|:|\./g, "-");
+    cb(null, date + file.originalname )
+  }
+})
 
-router.post('/insert', upload.array('media'), function(req, res) {
-  console.log(req.files)
-  var x = db.collection("images").insertOne({filename: req.files[0].filename, path: req.files[0].path}, function(err, result) {
+var upload = multer({storage:storage});
+
+router.post('/insert', upload.single('media'), function(req, res) {
+  var x = db.collection("images").insertOne({filename: req.file.filename, path: req.file.path}, function(err, result) {
     if (err) console.log(err);
-    console.log(result);
     res.status(200).send({ msg: 'There has been a success i think!' });
   });
   

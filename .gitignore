@@ -3,3 +3,4 @@ data/
 package-lock.json
 dblocal.sh
 images/
+.DS_Store

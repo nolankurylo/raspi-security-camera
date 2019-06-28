@@ -2,5 +2,7 @@ extends layout
 
 block content
   h1 Library Page
-  each image in images
-    img.className#IdName(src='images/' + image.filename alt="Image Title" style="width: 400px; length: 400px")
+  
+  each video in videos
+    video#myVideo(autoplay='autoplay', loop='loop', muted='muted', controls='controls' style="width: 400px; length: 400px")
+      source(src='videos/' + video.filename alt="Video Title")

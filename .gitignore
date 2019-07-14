@@ -1,6 +1,7 @@
 node_modules/
 data/
 package-lock.json
-dblocal.sh
+start.sh
 videos/
 .DS_Store
+venv

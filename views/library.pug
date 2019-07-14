@@ -1,8 +1,0 @@
-extends layout
-
-block content
-  h1 Library Page
-  
-  each video in videos
-    video#myVideo(autoplay='autoplay', loop='loop', muted='muted', controls='controls' style="width: 400px; length: 400px")
-      source(src='videos/' + video.filename alt="Video Title")

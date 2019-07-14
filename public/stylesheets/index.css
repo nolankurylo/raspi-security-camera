@@ -1,0 +1,51 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	min-height: 100%;
+	
+}
+
+#banner-image {
+	background-image: url("../img/attraction_header.jpg");
+	background-size: cover;
+	height: 80vh;
+
+}
+
+.container {
+	margin-bottom: 50px;
+}
+.centerize {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%)
+}
+
+.parrallax {
+	/* Create the parallax scrolling effect */
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+input.invalid {
+	border-color: red;
+	box-shadow: 0 0 3px red;
+	border-width: 1px;
+}
+
+input.valid {
+	border-color: green;
+	box-shadow: 0 0 3px green;
+
+}
+
+.card {
+	margin-bottom: 30px;
+}
+
+

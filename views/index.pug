@@ -1,5 +1,93 @@
-extends layout
 
-block content
-  h1 Welcome to Nolan's Raspberry Pi Camera Application
-  p Description of application . . . 
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+    title RPi Photo Library
+    // Bootstrap CSS from CDN
+    link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    // Font aweseme
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.7.1/css/all.css', integrity='sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr', crossorigin='anonymous')
+    // AOS Scroll
+    link(href='https://unpkg.com/aos@2.3.1/dist/aos.css', rel='stylesheet')
+    // Local style sheets
+    link(rel='stylesheet', href='/stylesheets/index.css')
+  body
+    #banner-image.jumbotron.jumbotron-fluid.parrallax.section
+      h1.text-center.centerize(style="color: white") Raspberry Pi Security Camera Photo Library
+    .container
+      h4 The following videos are clips that were detected by a PIR sensor and taken by a Raspberry Pi Camera. The Pi then sent the videos over to this web server.
+      br
+      hr
+      br
+      .content
+        block content
+      .row
+        each video in videos
+          .col-md-4.col-sm-12
+            .card.shadow
+              video#myVideo.card-img-top(loop='loop', muted='muted', controls='controls' style="")
+                source(src='videos/' + video.filename alt="Video Title")
+              .card-body.text-center
+                h6.card-title.text-center #{video.name}
+                p.text-muted Taken: #{new Date(video.timestamp).toLocaleString()}
+                .row
+                  .col.text-left
+                    button.btn.btn-success.edit(type='button', data-toggle='modal', data-target='#editModal' data-id=video._id) Edit 
+                  .col.text-right
+                    button.btn.btn-danger.delete(type='button', data-toggle='modal', data-target='#deleteModal' data-id=video._id) Delete
+
+    #editModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editModalLabel', aria-hidden='true', data-id="")
+      .modal-dialog.modal-dialog-centered(role='document')
+        .modal-content
+          .modal-header
+            h5#editModalLabel.modal-title Edit Video
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body.text-center
+            form#edit-form
+              h6 New Video Name:  
+              input.form-control(type='text', name='name', required min=1 placeholder="ie. My Video")
+              br
+              br
+              .row.modal-footer
+                .col.text-left
+                  input.btn.btn-secondary(type='button', value="Cancel", data-dismiss='modal')
+                .col.text-right
+                  input.btn.btn-success.save(type='button', value="Save Changes", data-dismiss='modal')
+
+    #deleteModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='deleteModalLabel', aria-hidden='true', data-id="")
+      .modal-dialog.modal-dialog-centered(role='document')
+        .modal-content
+          .modal-header
+            h5#deleteModalLabel.modal-title Delete Video
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body.text-center
+            form#edit-form
+              h5 Are you sure you want to delete this video?
+              br
+              br
+              .row.modal-footer
+                .col.text-left
+                  input.btn.btn-secondary(type='button', value="Cancel", data-dismiss='modal')
+                .col.text-right
+                  input.btn.btn-danger.confirm-delete(type='button', value="Delete Video", data-dismiss='modal')
+              
+            
+     
+        
+                
+    // Ajax
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+    script(src='https://code.jquery.com/jquery-3.4.1.js')
+    // Bootstrap Javascript
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
+    // AOS Scroll
+    script(src='https://unpkg.com/aos@2.3.1/dist/aos.js')
+    script.
+      AOS.init();
+    // Local Java Scripts
+    script(src='/javascripts/index.js')
+

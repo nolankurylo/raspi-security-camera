@@ -19,11 +19,9 @@ connectDB.createConnection(function (err, client) {
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, "public"))); 
 
-  // Import routes
-  app.use("/", require("./routes/get"));
-  app.use("/", require("./routes/post"));
-  app.use("/", require("./routes/patch"));
-  app.use("/", require("./routes/delete"));
+  // Import the Router
+  app.use("/", require("./router"));
+  
   
   // View engine setup
   app.set("views", path.join(__dirname, "views"));

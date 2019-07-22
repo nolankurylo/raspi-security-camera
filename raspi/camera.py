@@ -14,29 +14,33 @@ GPIO.setup(24, GPIO.OUT)  # LED
 GPIO.output(24, False)
 
 # Randomly generated URL to cast HTTP requests to remote web server
-API_URL = 'https://6132065e.ngrok.io'
+API_URL = 'https://29b01bc0.ngrok.io'
 camera = PiCamera()
 
 
 def sensorVideo():
-	print ("Booting the Camera")
+	print ("Starting the script")
 	while True:
 		# Check if PIR has detected motion
 		if GPIO.input(23):
+			print ("Movement detected")
 			# Turn on LED
 			GPIO.output(24, True)
 			camera.start_preview()
+			print ("Start recording")
 			# Initialize the camera
 			sleep(2)
 			# Take a 5 second video
 			camera.start_recording('video.h264')
 			camera.wait_recording(5)
 			camera.stop_recording()
+			print ("Stop recording")
 			camera.stop_preview()
 			# Convert the .h264 video file to a .mp4 file
 			command = "MP4Box -add video.h264 video.mp4"
 			try:
 				call([command], shell=True)
+				print ("Video converted to .mp4")
 				# Video converted successfully
 				url = API_URL + '/insert'
 				files = {'media': ('video.mp4', open('video.mp4', 'rb'))}
@@ -51,7 +55,7 @@ def sensorVideo():
 						# Could not remove .mp4 file
 						print (error)
 						break
-					print("Uploaded to webpage!")
+					print("Uploaded video to webpage!")
 				else:
 					print ("Request Error")
 					break
